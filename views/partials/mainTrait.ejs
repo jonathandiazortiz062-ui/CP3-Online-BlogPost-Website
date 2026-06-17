@@ -1,0 +1,27 @@
+<h1>Discover the latest blog posts and share your thoughts</h1>
+<% if (posts.length === 0) { %>
+    <p>No blog posts available. Be the first to create one!</p>
+<% } else { %>
+    <div class="list-group">
+        <% posts.forEach(function(post, idx) { %>
+            <div class="list-group-item flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <div>
+                        <h5 class="mb-1"><%= post.title %></h5>
+                        <small class="text-muted">by <%= post.author %></small>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <form action="/posts/<%= post.id %>/delete" method="POST" style="display:inline">
+                            <button type="submit" class="btn btn-sm btn-danger px-3" onclick="return confirm('Delete this post?')">Delete</button>
+                        </form>
+                        <form action="/update/<%= post.id %>" method="GET" style="display:inline" class="ms-2">
+                            <button type="submit" class="btn btn-sm btn-primary px-3">Update</button>
+                        </form>
+                    </div>
+                </div>
+                <p class="mb-1"><%= post.content.substring(0, 100) %>...</p>
+                <small class="text-muted">Posted on <%= post.createdAt.toLocaleDateString() %></small>
+            </div>
+        <% }) %>
+    </div>
+<% } %> 
